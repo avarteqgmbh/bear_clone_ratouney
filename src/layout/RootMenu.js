@@ -3,7 +3,7 @@ import { Menu, Icon } from 'antd';
 const MenuItemGroup = Menu.ItemGroup;
 
 const RootMenu = ({items, tags}) => (
-      <tr>
+      <div>
       <Menu theme="dark" mode="inline">
       {items.map((item) =>
         <Menu.Item key={item.key}>
@@ -14,7 +14,14 @@ const RootMenu = ({items, tags}) => (
       </Menu>
       <hr />
       <Menu theme="dark" mode="inline" >
-      <MenuItemGroup key="1" title={<span><Icon type="tags" /><span>Tags</span></span>}>
+      <MenuItemGroup key="1" title={
+            <span>
+              <Icon type="tags" style={{ fontSize: 14}} />
+            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>
+            Tags
+            </span>
+            </span>
+            }>
         {tags.map((tag, i) =>
           <Menu.Item key={i}>
              <Icon />
@@ -23,7 +30,7 @@ const RootMenu = ({items, tags}) => (
         )}
       </MenuItemGroup>
       </Menu>
-      </tr>
+      </div>
 )
 
 export default RootMenu;

@@ -1,0 +1,5 @@
+# Ignore the modules
+node_modules/*
+
+# Ignore VSC files
+.vscode/*
