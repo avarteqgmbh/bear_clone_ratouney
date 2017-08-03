@@ -29,6 +29,7 @@ export class NotesList extends Component {
             <Search
               placeholder="Search"
               onClick={ this.handleSearchClick }
+              onSearch={ value => console.log("You typed : ", value)}
             />
           </Col> 
           <Col span={1}>
