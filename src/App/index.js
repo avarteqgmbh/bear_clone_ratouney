@@ -3,7 +3,7 @@ import { Layout} from 'antd';
 import './../App.css';
 import RootMenu from './../layout/RootMenu.js';
 import { NoteBody } from './../note/Note.js';
-import { NotesList } from './../note/NotesList.js';
+import NotesList from './../note/NotesList.js';
 const { Sider } = Layout;
 
 const RootMenuItems = [
@@ -20,6 +20,7 @@ const RootMenuTags = [
 
 class App extends Component {
   render() {
+    console.log('Main app props : ', this.props)
     return (
       <Layout>
         <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, width: '120px' }}>

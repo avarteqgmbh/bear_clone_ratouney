@@ -11,7 +11,10 @@ let store = createStore( StoreHandler);
 
 ReactDOM.render(
   <Provider store={ store }>
+    <div>
+    {console.log('Provider gave store :', store.getState())}
     <App />
+    </div>
   </Provider>
 , document.getElementById('root'));
 registerServiceWorker();

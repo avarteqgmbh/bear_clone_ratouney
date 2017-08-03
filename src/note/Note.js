@@ -1,25 +1,30 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
-import { selectNote } from './Actions.js'
 const { Content } = Layout ;
 
-export class NoteBody extends React.Component {
-  handleChange() {
-    console.log('Note boy has to update to show note :')
+export class RenderNoteBody extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.content = "Dong"
   }
 
-  createListener() {
-    console.log('Creating listener in note body')
+  getContent() {
+    if (typeof this.props.note === 'undefined')
+      this.content = "You are in the search box, there is no note"
+    else if (this.props.note === '-1')
+      this.content = "No content"
+    else
+      this.content = this.props.notes[this.props.note - 1].content
   }
   
   render() {
-    this.createListener()
-    console.log('Props are : ', this.props)
     return <div>
       <Content style={{ margin: '24px 16px 24px', overflow: 'initial' }}>
         <div style={{ padding: 24, background: '#fff', textAlign: 'center'}}>
-          ...Stuff
+          {this.getContent()}
+          {this.content}
         </div>
       </Content>
     </div>
@@ -29,8 +34,9 @@ export class NoteBody extends React.Component {
 function mapStateToProps(state) {
   return {
     note: state.note,
-    full: state
+    notes: state.notes
   }
 }
 
-export default connect(mapStateToProps)(NoteBody);
+export const NoteBody = connect(mapStateToProps)(RenderNoteBody);
+export default NoteBody;
