@@ -20,11 +20,10 @@ export class NotesList extends Component {
   }
 
   render() {
-    return <div>
+    return (
       <Menu theme="light" mode="inline" onClick={(id) => this.props.onNoteClick(id)} >
         <Row>
-          <Col span={2}>
-          </Col>
+          <Col span={2} />
           <Col span={16} >
             <Search
               placeholder="Search"
@@ -45,7 +44,7 @@ export class NotesList extends Component {
         </Menu.Item>
       )}
       </Menu>
-      </div>
+    )
   }
 }
 

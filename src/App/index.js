@@ -27,7 +27,6 @@ class App extends Component {
           <RootMenu items={RootMenuItems} tags={RootMenuTags} />
         </Sider>
         <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 120, backgroundColor: '#fff' }}>
-          {/* <NotesList items={NoteListItems}/> */}
           <NotesList/>
         </Sider>
     <Layout style={{ marginLeft: 320 }}>
