@@ -1,66 +1,29 @@
-import React, { Component } from 'react';
-import { Menu, Icon, Button } from 'antd';
-import { Input} from 'antd';
-import { Row, Col } from 'antd';
-import { connect } from 'react-redux' ;
-// eslint-disable-next-line
-import { Provider } from 'react-redux' ;
-import { selectNote } from './Actions.js' ;
-const Search = Input.Search;
 
-export class NotesList extends Component {
+import React from 'react';
+import { Menu, Col, Button } from 'antd';
 
-
-  handleAddClick() {
-    console.log("You clicked on da button")
-  }
-
-  handleSearchClick() {
-    console.log("You clicked on da searchbar")
-  }
-
-  render() {
-    return (
-      <Menu theme="light" mode="inline" onClick={(id) => this.props.onNoteClick(id)} >
-        <Row>
-          <Col span={2} />
-          <Col span={16} >
-            <Search
-              placeholder="Search"
-              onClick={ this.handleSearchClick }
-              onSearch={ value => console.log("You typed : ", value)}
-            />
-          </Col> 
-          <Col span={1}>
+const NotesList = function NotesList({ notes, hover, selected, onNoteClick, onExitNote, onEnterNote, onTrashNote }) {
+  return (
+    <Menu theme="light" mode="inline"  >
+      {notes.map((note) =>
+        <Menu.Item key={note.id} onMouseEnter={() => onEnterNote(note.id)} onMouseLeave={() => onExitNote(note.id)} >
+          <Col span={20} onClick={() => onNoteClick(note.id)}>
+            <span className="nav-text" style={{ fontWeight: 'bold', fontSize: '15px' }} >
+              {note.title}
+            </span>
           </Col>
-          <Col span={5} >
-          <Button type="primary" shape="circle" icon="plus" onClick={ this.handleAddClick } />
-          </Col> 
-        </Row>
-      {this.props.notes.map((item) =>
-        <Menu.Item key={item.key}>
-          <Icon/>
-          <span className="nav-text" style={{ fontWeight: 'bold', fontSize: '15px' }} >{item.title}</span>
+          <Col offset={1} span={2}>
+            {note.id === hover 
+            ? note.id === selected 
+              ? <Button icon="delete" type="danger" disabled/>
+              : <Button icon="delete" type="danger" onClick={() => onTrashNote(note.id)} />
+            : ""}
+
+          </Col>
         </Menu.Item>
       )}
-      </Menu>
-    )
-  }
+    </Menu>
+  );
 }
 
-function mapStateToProps(state) {
-  return {
-    note: state.note,
-    notes: state.notes
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onNoteClick: id => {
-      dispatch(selectNote(id.key))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NotesList);
+export default NotesList;

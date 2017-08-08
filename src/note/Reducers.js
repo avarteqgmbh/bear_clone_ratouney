@@ -1,29 +1,121 @@
-import { SELECT_NOTE } from './Types.js';
-import { UPDATE_BODY_NOTE } from './Types.js';
-import { UPDATE_TITLE_NOTE } from './Types.js';
+import {
+  SELECT_NOTE,
+  ENTER_NOTE,
+  EXIT_NOTE,
+  ADD_NOTE,
+  TRASH_NOTE,
+  UPDATE_BODY_NOTE,
+  UPDATE_TITLE_NOTE,
+} from './Types.js';
+import _ from 'lodash';
 
 const initalState = {
   notes: [
-    { key: 1, title: "Hello", content: "HELLO THIS IS MY LIFE" },
-    { key: 2, title: "World", content: "The world is great" },
-    { key: 3, title: "Give", content: "Never gonna give you up" },
-    { key: 4, title: "Let", content: "Never gonna let you down" },
-    { key: 5, title: "Run", content: "Never gonna run around" },
-    { key: 6, title: "Make", content: "Never gonna make you cry" },
-    { key: 7, title: "Say", content: "Never gonna say goodbye" },
-    { key: 8, title: "Tell", content: "Never gonna tell a lie" },
-    { key: 9, title: "Hurt", content: "or hurt you..." },
+    { id: 1, title: "World", content: "The world is great", status: "GENERAL" },
+    { id: 2, title: "Hello", content: "HELLO THIS IS MY LIFE", status: "GENERAL" },
+    { id: 3, title: "Give", content: "Never gonna give you up", status: "GENERAL" },
+    { id: 4, title: "Let", content: "Never gonna let you down", status: "TRASH" },
+    { id: 5, title: "Run", content: "Never gonna run around", status: "GENERAL" },
+    { id: 6, title: "Make", content: "Never gonna make you cry", status: "GENERAL" },
+    { id: 7, title: "Say", content: "Never gonna say goodbye", status: "TRASH" },
+    { id: 8, title: "Tell", content: "Never gonna tell a lie", status: "GENERAL" },
+    { id: 9, title: "Hurt", content: "or hurt you...", status: "TRASH" },
   ],
-  note: -1,
+  selectedNoteId: -1,
+  overNoteId: -1,
 }
 
-export function StoreHandler(state = initalState, action) {
+const initalNote = function initalNote(id) {
+  return {
+    id,
+    title: '',
+    content: '',
+    status: 'GENERAL',
+  }
+}
+
+const NoteReducer = function NoteReducer(state = initalState, action) {
+  let lastId = (list) => {
+    return ((_.last(list)).id);
+  }
+
   switch (action.type) {
+    case TRASH_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map(note =>
+            note.id === action.id
+              ? { ...note, status: "TRASH" }
+              : note
+          ),
+          selectedNoteId: -1
+        }
+      );
+
+    case ENTER_NOTE:
+      return Object.assign(
+        {},
+        state,
+        { ...state, overNoteId: action.id }
+      );
+
+    case EXIT_NOTE:
+      if (state.selectedNoteId === action.id) {
+        return Object.assign(
+          {},
+          state,
+          { ...state, overNoteId: -1 }
+        );
+      } else {
+        return state;
+      }
+
     case SELECT_NOTE:
       return Object.assign(
         {},
         state,
-        { note: action.note })
+        { selectedNoteId: action.id })
+
+    case UPDATE_BODY_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map(note =>
+            note.id === action.id
+              ? { ...note, content: action.body }
+              : note
+          ),
+          selectedNoteId: action.id
+        }
+      );
+
+    case UPDATE_TITLE_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map(note =>
+            note.id === action.id
+              ? { ...note, title: action.title }
+              : note
+          ),
+          selectedNoteId: action.id
+        }
+      );
+
+    case ADD_NOTE:
+      let newNote = initalNote(lastId(state.notes) + 1)
+
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: [...state.notes, newNote],
+          selectedNoteId: newNote.id
+        });
 
     case UPDATE_BODY_NOTE:
       return Object.assign(
@@ -55,3 +147,5 @@ export function StoreHandler(state = initalState, action) {
       return state
   }
 }
+
+export default NoteReducer;

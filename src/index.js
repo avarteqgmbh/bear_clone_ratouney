@@ -3,18 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
 import registerServiceWorker from './registerServiceWorker';
-import { StoreHandler } from './note/Reducers';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
+import NoteApp from './reducers';
 
-let store = createStore( StoreHandler);
+//let store = createStore(NoteApp, applyMiddleware(logger));
+let store = createStore(NoteApp);
 
 ReactDOM.render(
-  <Provider store={ store }>
-    <div>
-    {console.log('Provider gave store :', store.getState())}
+  <Provider store={store}>
     <App />
-    </div>
   </Provider>
 , document.getElementById('root'));
 registerServiceWorker();

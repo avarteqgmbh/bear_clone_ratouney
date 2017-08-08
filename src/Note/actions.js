@@ -4,33 +4,60 @@
  *
  */
 
-import { SELECT_NOTE } from './Types.js';
-import { ADD_NOTE } from './Types.js';
-import { UPDATE_BODY_NOTE } from './Types.js';
-import { UPDATE_TITLE_NOTE } from './Types.js';
+import { 
+  SELECT_NOTE,
+  ADD_NOTE,
+  TRASH_NOTE,
+  UPDATE_BODY_NOTE,
+  UPDATE_TITLE_NOTE,
+  ENTER_NOTE,
+  EXIT_NOTE,
+ } from './Types.js';
 
-export const selectNote = (note) => {
+export const trashNote = (id) => {
+  return ({
+    type: TRASH_NOTE,
+    id
+  })
+}
+
+export const exitNote = (id) => {
+  return ({
+    type: EXIT_NOTE,
+    id
+  });
+}
+
+export const enterNote = (id) => {
+  return ({
+    type: ENTER_NOTE,
+    id
+  });
+}
+
+export const selectNote = (id) => {
   return ({
     type: SELECT_NOTE,
-    note
+    id
   });
 }
 
-export const updateBodyNote = (note, body) => {
+export const updateBodyNote = (id, body) => {
   return ({
     type: UPDATE_BODY_NOTE,
-    note: note,
-    new_body: body
+    id,
+    body,
   });
 }
 
-export const updateTitleNote = (note, title) => {
+export const updateTitleNote = (id, title) => {
   return ({
     type: UPDATE_TITLE_NOTE,
-    note: note,
-    new_title: title
+    id,
+    title,
   });
 }
+
 export const addNote = () => {
   return ({
     type: ADD_NOTE

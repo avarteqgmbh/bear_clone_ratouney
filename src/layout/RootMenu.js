@@ -1,36 +1,41 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
-const MenuItemGroup = Menu.ItemGroup;
+import { Menu, Icon, Layout } from 'antd';
 
-const RootMenu = ({items, tags}) => (
-      <div>
-      <Menu theme="dark" mode="inline">
+const { Sider } = Layout;
+const { ItemGroup } = Menu;
+const MENU_TITLE = "Tags";
+
+const itemGroupTitle = function itemGroupTitle(title) {
+  return (
+    <div>
+      <Icon type="tags" style={{ fontSize: 14 }} />
+      <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{title}</span>
+    </div>
+  );
+}
+
+const RootMenu = ({ items, tags }) => (
+  <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, width: '120px' }}>
+    <Menu theme="dark" mode="inline">
       {items.map((item) =>
         <Menu.Item key={item.key}>
           <Icon type={item.icon} />
           <span className="nav-text">{item.title}</span>
         </Menu.Item>
       )}
-      </Menu>
-      <hr />
-      <Menu theme="dark" mode="inline" >
-      <MenuItemGroup key="1" title={
-            <span>
-              <Icon type="tags" style={{ fontSize: 14}} />
-            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>
-            Tags
-            </span>
-            </span>
-            }>
+
+      <Menu.Divider />
+
+      <ItemGroup key="3" title={itemGroupTitle(MENU_TITLE)}>
         {tags.map((tag, i) =>
-          <Menu.Item key={i}>
-             <Icon />
+          <Menu.Item key={i + 4}>
+            <Icon type="tag-o" />
             <span className="nav-text">{tag}</span>
           </Menu.Item>
         )}
-      </MenuItemGroup>
-      </Menu>
-      </div>
+      </ItemGroup>
+    </Menu>
+  </Sider>
 )
 
 export default RootMenu;

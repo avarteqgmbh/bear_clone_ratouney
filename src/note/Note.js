@@ -1,65 +1,42 @@
 import React from 'react';
-import { Layout, Input } from 'antd';
+import { Input, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { updateBodyNote } from './Actions';
 import { updateTitleNote } from './Actions';
-const { Content } = Layout ;
+import _ from 'lodash';
 
 export class RenderNoteBody extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.content = "Dong"
-  };
-
-  getContent() {
-    if (typeof this.props.note === 'undefined')
-      return "You are in the search box, there is no note"
-    else if (this.props.note === -1)
-      return "No content"
-    else
-      return this.content = this.props.notes[this.props.note - 1].content
-  };
-
-  getTitle() {
-    if (typeof this.props.note === 'undefined')
-      return "You are in the search box, there is no note"
-    else if (this.props.note == -1)
-      return "No content"
-    else
-      return this.title = this.props.notes[this.props.note - 1].title
-  }
-
-  handleChangeBody(e) {
-    this.props.onBodyUpdate(this.props.note, e.target.value)
-  };
- 
-  handleChangeTitle(e) {
-    this.props.onTitleUpdate(this.props.note, e.target.value)
-  };
-
   render() {
-    return <div>
-      <Content style={{ margin: '24px 16px 24px', overflow: 'initial' }}>
-        <div style={{ padding: 24, background: '#fff', textAlign: 'center'}}>
-        {this.props.note === -1
-          ? "Nothing"
-          :
-          <div>
-          <Input.TextArea value={this.getTitle()} onChange={this.handleChangeTitle.bind(this)} />
-          <Input.TextArea value={this.getContent()} onChange={this.handleChangeBody.bind(this)} />
-          </div>
-        }
-        </div>
-      </Content>
-    </div>
+    const { selectedNoteId, notes } = this.props;
+    
+    if (selectedNoteId === -1) { return (<div>You know Nothing</div>); }
+    const cur = _.findIndex(notes, note => note.id === selectedNoteId)
+    const current = notes[selectedNoteId - 1];
+    return (
+      <div>
+        <Row>
+          <Col span={20} offset={2}>
+            <h1>
+              <Input.TextArea value={current.title} onChange={({ target: { value: newTitle } }) => this.props.onTitleUpdate(selectedNoteId, newTitle)} />
+            </h1>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: 35, textAlign: "justify" }}>
+          <Col span={20} offset={2}>
+            <p>
+              <Input.TextArea value={current.content} onChange={({ target: { value: newBody } }) => this.props.onBodyUpdate(selectedNoteId, newBody)} />
+            </p>
+          </Col>
+        </Row>
+      </div>
+    );
   };
 }
 
 function mapStateToProps(state) {
   return {
-    note: state.note,
-    notes: state.notes
+    selectedNoteId: state.NoteReducer.selectedNoteId,
+    notes: state.NoteReducer.notes
   }
 }
 
