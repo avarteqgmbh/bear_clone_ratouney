@@ -117,32 +117,6 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
           selectedNoteId: newNote.id
         });
 
-    case UPDATE_BODY_NOTE:
-      return Object.assign(
-        {},
-        state,
-        {notes: state.notes.map( elem => 
-          elem.key == action.note 
-            ? { ...elem, content: action.new_body }
-            : elem
-          ),
-          note: action.note
-        }
-      );
-
-    case UPDATE_TITLE_NOTE:
-      return Object.assign(
-        {},
-        state,
-        {notes: state.notes.map( elem => 
-          elem.key == action.note 
-            ? { ...elem, title: action.new_title }
-            : elem
-          ),
-          note: action.note
-        }
-      );
-
     default:
       return state
   }

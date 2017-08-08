@@ -3,14 +3,16 @@ import { Input, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { updateBodyNote } from './Actions';
 import { updateTitleNote } from './Actions';
-import _ from 'lodash';
+// Needed for a commented array search function
+//import _ from 'lodash';
 
 export class RenderNoteBody extends React.Component {
   render() {
     const { selectedNoteId, notes } = this.props;
     
     if (selectedNoteId === -1) { return (<div>You know Nothing</div>); }
-    const cur = _.findIndex(notes, note => note.id === selectedNoteId)
+    // Find the real spot in the array with this
+    //const cur = _.findIndex(notes, note => note.id === selectedNoteId)
     const current = notes[selectedNoteId - 1];
     return (
       <div>

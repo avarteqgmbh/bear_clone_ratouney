@@ -4,8 +4,9 @@ import './index.css';
 import App from './app';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import logger from 'redux-logger';
+import { createStore } from 'redux';
+//import { applyMiddleware, createStore } from 'redux';
+//import logger from 'redux-logger';
 import NoteApp from './reducers';
 
 //let store = createStore(NoteApp, applyMiddleware(logger));
