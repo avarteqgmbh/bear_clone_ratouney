@@ -4,6 +4,7 @@ import {
   EXIT_NOTE,
   ADD_NOTE,
   TRASH_NOTE,
+  RESTORE_NOTE,
   UPDATE_BODY_NOTE,
   UPDATE_TITLE_NOTE,
 } from './Types.js';
@@ -49,6 +50,21 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
               : note),
           ),
           selectedNoteId: -1,
+        },
+      );
+
+    case RESTORE_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map((note) =>
+            (note.id === action.id
+              ? { ...note, status: 'GENERAL' }
+              : note),
+          ),
+          selectedNoteId: -1,
+          overNoteId: -1,
         },
       );
 

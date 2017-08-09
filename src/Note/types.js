@@ -5,6 +5,7 @@ export const UPDATE_TITLE_NOTE = 'UPDATE_TITLE_NOTE';
 
 export const ADD_NOTE = 'ADD_NOTE';
 export const TRASH_NOTE = 'TRASH_NOTE';
+export const RESTORE_NOTE = 'RESTORE_NOTE';
 
 export const TRASH = 'TRASH';
 export const GENERAL = 'GENERAL';

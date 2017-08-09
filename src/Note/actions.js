@@ -8,6 +8,7 @@ import {
   SELECT_NOTE,
   ADD_NOTE,
   TRASH_NOTE,
+  RESTORE_NOTE,
   UPDATE_BODY_NOTE,
   UPDATE_TITLE_NOTE,
   ENTER_NOTE,
@@ -16,6 +17,11 @@ import {
 
 export const trashNote = (id) => ({
   type: TRASH_NOTE,
+  id,
+});
+
+export const restoreNote = (id) => ({
+  type: RESTORE_NOTE,
   id,
 });
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Icon, Layout } from 'antd';
 
 const { Sider } = Layout;
@@ -17,11 +18,14 @@ const itemGroupTitle = function itemGroupTitle(title) {
 const RootMenu = ({ items, tags }) => (
   <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, width: '120px' }}>
     <Menu theme="dark" mode="inline">
-      {items.map((item) =>
-        (<Menu.Item key={item.key}>
-          <Icon type={item.icon} />
-          <span className="nav-text">{item.title}</span>
-        </Menu.Item>),
+      {items.map((item) => (
+        <Menu.Item key={item.key}>
+          <Link to={item.note_category} onClick={() => console.log('CLICKED GOTO : ', item.note_category)} >
+            <Icon type={item.icon} />
+            <span className="nav-text">{item.title}</span>
+          </Link>
+        </Menu.Item>
+      ),
       )}
 
       <Menu.Divider />
