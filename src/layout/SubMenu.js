@@ -61,5 +61,5 @@ const mapDispatchToProps = (dispatch) => ({
   onRestoreNote: (id) => { dispatch(restoreNote(Number(id))); },
 });
 
-const SubMenu = connect(mapStateToProps, mapDispatchToProps)(BuildSubMenu);
+const SubMenu = connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(BuildSubMenu);
 export default SubMenu;
