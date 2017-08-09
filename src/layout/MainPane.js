@@ -13,6 +13,6 @@ const MainPane = function MainPane({ children }) {
       </Content>
     </Layout>
   );
-}
+};
 
 export default MainPane;

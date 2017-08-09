@@ -3,16 +3,16 @@ import RootMenu from './RootMenu';
 import SubMenu from './SubMenu';
 
 const RootMenuItems = [
-  { key: 1, title: "General", icon: "apple" },
-  { key: 2, title: "Trash", icon: "delete" },
-]
+  { key: 1, title: 'General', icon: 'apple' },
+  { key: 2, title: 'Trash', icon: 'delete' },
+];
 
 const RootMenuTags = [
-  "Learning",
-  "React",
-  "Is basically",
-  "learning JS",
-]
+  'Learning',
+  'React',
+  'Is basically',
+  'learning JS',
+];
 
 const Menus = function Menus() {
   return (
@@ -22,6 +22,6 @@ const Menus = function Menus() {
       <SubMenu />
     </div>
   );
-}
+};
 
 export default Menus;
