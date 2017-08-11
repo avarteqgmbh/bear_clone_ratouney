@@ -30,6 +30,11 @@ export class RenderNoteBody extends React.Component {
             </p>
           </Col>
         </Row>
+        <Row>
+          <Col style={{ textAlign: 'right' }}>
+            YOLO
+          </Col>
+        </Row>
       </div>
     );
   }
