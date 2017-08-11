@@ -16,7 +16,7 @@ class GetNotesMain extends Component {
     }
 
     render() {
-        MessageBox("Senpai, notice me", "Fetching Notes from remote server", "retweet", { color: 'blue' });
+        //MessageBox("Senpai, notice me", "Fetching Notes from remote server", "retweet", { color: 'blue' });
         this.props.onStartFetchingNotes()
         fetch(process.env.REACT_APP_API_URL + '/notes')
         .then(

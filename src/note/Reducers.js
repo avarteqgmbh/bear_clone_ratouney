@@ -51,7 +51,6 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
         {},
         state,
         {
-          ...state,
           notes: action.notes
         }
       )

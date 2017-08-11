@@ -16,7 +16,16 @@ import {
   FETCHING_NOTES_START,
   FETCHING_NOTES_STOP,
   UPDATE_NOTES,
+  POST_NOTE,
 } from './Types.js';
+
+export const postNote = (id, title, body, status) => ({
+  type: POST_NOTE,
+  id,
+  title,
+  body,
+  status,
+})
 
 export const updateNotes = (notes) => ({
   type: UPDATE_NOTES,
