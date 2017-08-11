@@ -26,7 +26,7 @@ export class RenderNoteBody extends React.Component {
         <Row style={{ marginTop: 35, textAlign: 'justify' }}>
           <Col span={20} offset={2}>
             <p>
-              <Input.TextArea value={current.content} onChange={({ target: { value: newBody } }) => this.props.onBodyUpdate(selectedNoteId, newBody)} />
+              <Input.TextArea value={current.body} onChange={({ target: { value: newBody } }) => this.props.onBodyUpdate(selectedNoteId, newBody)} />
             </p>
           </Col>
         </Row>

@@ -14,7 +14,7 @@ const RootMenuTags = [
   'learning JS',
 ];
 
-const Menus = function Menus() {
+const Menus = function Menus(props) {
   return (
     <div>
       <RootMenu items={RootMenuItems} tags={RootMenuTags} />

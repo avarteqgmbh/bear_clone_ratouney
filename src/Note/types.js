@@ -11,3 +11,8 @@ export const TRASH = 'TRASH';
 export const GENERAL = 'GENERAL';
 export const ENTER_NOTE = 'ENTER_NOTE';
 export const EXIT_NOTE = 'EXIT_NOTE';
+
+export const FETCHING_NOTES_START = 'FETCHING_NOTES_START';
+export const FETCHING_NOTES_STOP = 'FETCHING_NOTES_STOP';
+
+export const UPDATE_NOTES = 'UPDATE_NOTES';

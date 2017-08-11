@@ -13,7 +13,23 @@ import {
   UPDATE_TITLE_NOTE,
   ENTER_NOTE,
   EXIT_NOTE,
+  FETCHING_NOTES_START,
+  FETCHING_NOTES_STOP,
+  UPDATE_NOTES,
 } from './Types.js';
+
+export const updateNotes = (notes) => ({
+  type: UPDATE_NOTES,
+  notes,
+})
+
+export const fetchNotesStart = () => ({
+  type: FETCHING_NOTES_START,
+})
+
+export const fetchNotesStop = () => ({
+  type: FETCHING_NOTES_STOP,
+})
 
 export const trashNote = (id) => ({
   type: TRASH_NOTE,
