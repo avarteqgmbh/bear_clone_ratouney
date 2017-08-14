@@ -38,7 +38,6 @@ export class RenderNoteBody extends React.Component {
     const { selectedNoteId, notes } = this.props;
 
     if (selectedNoteId === -1) { return (<div>You know Nothing</div>); }
-    // Find the real spot in the array with this
     const cur = _.findIndex(notes, note => note.id === selectedNoteId)
     const current = notes[cur];
     return (

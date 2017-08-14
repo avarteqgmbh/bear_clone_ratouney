@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
 import './../App.css';
-import MainPane from './../layout/MainPane';
-import Menus from './../layout/Menus';
-import Note from './../note/Note';
-import GetNotes from './../api/GetNotes';
+import NoteMenu from './../panels/NoteMenu';
+import LoginScreen from './../panels/LoginScreen';
+import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <Layout>
-        <GetNotes />
-        <Menus />
-
-        <MainPane>
-          <Note />
-        </MainPane>
-
-      </Layout>
+      <Switch>
+        <Route exact path="/auth">
+          <LoginScreen />
+        </Route>
+        <Route>
+          <NoteMenu />
+        </Route>
+      </Switch>
     );
   }
 }
