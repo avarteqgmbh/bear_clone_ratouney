@@ -1,4 +1,3 @@
-import React from 'react';
 import { store } from './../index.js';
 import MessageBox from './../layout/MessageBox';
 import { loginRequestStart, loginRequestStop, registerToken } from './Actions';
@@ -31,7 +30,7 @@ const LoginUser = function LoginUser(data) {
         headers,
         body
     }
-    let rt = fetch(adress, params)
+    fetch(adress, params)
         .then(
         response => HandleAnswer(response),
         error => console.log('FAK : ', error)
