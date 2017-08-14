@@ -16,7 +16,11 @@ class GetNotesMain extends Component {
     }
 
     render() {
-        //MessageBox("Senpai, notice me", "Fetching Notes from remote server", "retweet", { color: 'blue' });
+        if (this.props.canfetch === false) {
+            return (
+                <div></div>
+            )
+        }
         this.props.onStartFetchingNotes()
         fetch(process.env.REACT_APP_API_URL + '/notes')
         .then(
@@ -32,6 +36,13 @@ class GetNotesMain extends Component {
     };
 }
 
+function mapStateToProps(state) {
+    let canfetch = ( state.SessionReducer.token !== '' ? true : false)
+    return {
+        canfetch,
+    }
+}
+
 const mapDispatchToProps = (dispatch) => ({
     onStartFetchingNotes: () => {
         dispatch(fetchNotesStart())
@@ -44,6 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
     }
  })
 
-const GetNotes = connect(null, mapDispatchToProps)(GetNotesMain)
+const GetNotes = connect(mapStateToProps, mapDispatchToProps)(GetNotesMain)
 
 export default GetNotes;

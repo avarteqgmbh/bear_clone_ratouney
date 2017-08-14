@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   Form,
   Icon,
@@ -8,16 +10,14 @@ import {
   Row,
   Col
 } from 'antd';
+import LoginUser from './../session/LoginUser';
 const FormItem = Form.Item;
 
 class RenderLoginScreen extends Component {
   handleSubmit(e) {
-    console.log("Props : ", this.props)
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
+      LoginUser(values)
     });
   }
 
@@ -72,6 +72,16 @@ class RenderLoginScreen extends Component {
             <Col offset={8} >
               Or <a href="">register now!</a>
             </Col>
+            <Col offset={12} >
+                {
+                  this.props.canfetch === true
+                  ? <Link to={"/"} onClick={() => console.log('CLICKED GOTO NOTES')} >
+                      <Icon type={"apple"} size='large' />
+                      <span className="nav-text">Proceed to Notes</span>
+                    </Link>
+                  : ''
+                }
+            </Col>
           </Row>
         </FormItem>
       </Form>
@@ -79,6 +89,14 @@ class RenderLoginScreen extends Component {
   }
 }
 
-const LoginScreen = Form.create()(RenderLoginScreen);
+function mapStateToProps(state) {
+  let canfetch = ( state.SessionReducer.token !== '' ? true : false)
+  return {
+      canfetch,
+  }
+}
+
+const FormLoginScreen = Form.create()(RenderLoginScreen);
+const LoginScreen= connect(mapStateToProps)(FormLoginScreen);
 
 export default LoginScreen;

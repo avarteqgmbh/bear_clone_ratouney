@@ -42,7 +42,7 @@ const initalNote = function initalNote(id) {
 };
 
 const NoteReducer = function NoteReducer(state = initalState, action) {
-  console.log("[REDUCER] - Action : ", action)
+  console.log("[NoteReducer:Action] - ", action)
   const lastId = (list) => ((_.last(list)).id);
 
   switch (action.type) {

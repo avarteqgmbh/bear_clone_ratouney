@@ -11,7 +11,7 @@ import { createStore } from 'redux';
 import NoteApp from './reducers';
 
 // let store = createStore(NoteApp, applyMiddleware(logger));
-const store = createStore(NoteApp);
+export const store = createStore(NoteApp);
 
 ReactDOM.render(
   <BrowserRouter>
