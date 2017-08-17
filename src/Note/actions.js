@@ -1,9 +1,4 @@
-/*
- *  In this part, we create the different action types the reducer will use
- *
- *
- */
-
+import _ from 'lodash';
 import {
   SELECT_NOTE,
   ADD_NOTE,
@@ -13,70 +8,135 @@ import {
   UPDATE_TITLE_NOTE,
   ENTER_NOTE,
   EXIT_NOTE,
-  FETCHING_NOTES_START,
-  FETCHING_NOTES_STOP,
-  UPDATE_NOTES,
-  POST_NOTE,
-} from './Types.js';
+  GET_NOTES_START,
+  GET_NOTES_FAILURE,
+  GET_NOTES_SUCCESS,
+  UPLOAD_NOTE_START,
+  UPLOAD_NOTE_STOP,
+} from './Types';
+import API from './../api';
+import MessageBox from './../layout/MessageBox';
 
-export const postNote = (id, title, body, status) => ({
-  type: POST_NOTE,
-  id,
-  title,
-  body,
-  status,
-})
+export const uploadNote = (note) => {
+  return (dispatch, getState) => {
+    dispatch(uploadNoteStart());
 
-export const updateNotes = (notes) => ({
-  type: UPDATE_NOTES,
-  notes,
-})
+    const stat = getState();
+    const pos_in_arr = _.findIndex(stat.NoteReducer.notes, (tempnote) => tempnote.id === stat.NoteReducer.selectedNoteId)
+    const curr = stat.NoteReducer.notes[pos_in_arr];
+    const payload = {
+      note: {
+        id: curr.id,
+        title: curr.title,
+        body: curr.body,
+      },
+    };
+    API.post('/notes/' + curr.id, payload)
+    .then((response) => console.log('did not fail : ', response))
+    .catch((errors) => console.log('Fuck', errors))
 
-export const fetchNotesStart = () => ({
-  type: FETCHING_NOTES_START,
-})
 
-export const fetchNotesStop = () => ({
-  type: FETCHING_NOTES_STOP,
-})
+    dispatch(uploadNoteStop());
+  }
+};
 
-export const trashNote = (id) => ({
-  type: TRASH_NOTE,
-  id,
-});
+export const uploadNoteStart = () => {
+  return {
+    type: UPLOAD_NOTE_START,
+  };
+};
 
-export const restoreNote = (id) => ({
-  type: RESTORE_NOTE,
-  id,
-});
+export const uploadNoteStop = () => {
+  return {
+    type: UPLOAD_NOTE_STOP,
+  };
+};
 
-export const exitNote = (id) => ({
-  type: EXIT_NOTE,
-  id,
-});
+export const getNotesStart = () => {
+  return {
+    type: GET_NOTES_START,
+  };
+};
 
-export const enterNote = (id) => ({
-  type: ENTER_NOTE,
-  id,
-});
+export const getNotesFailure = (error) => {
+  return {
+    type: GET_NOTES_FAILURE,
+    error,
+  };
+};
 
-export const selectNote = (id) => ({
-  type: SELECT_NOTE,
-  id,
-});
+export const getNotesSuccess = (notes) => {
+  MessageBox("Senpai, notice me", "Notes fetched from Server !", "sync", { color: 'green'});
+  return {
+    type: GET_NOTES_SUCCESS,
+    notes,
+  };
+};
 
-export const updateBodyNote = (id, body) => ({
-  type: UPDATE_BODY_NOTE,
-  id,
-  body,
-});
+export const getNotes = () => {
+  return (dispatch) => {
+    console.log('Starting GetNotes');
+    dispatch(getNotesStart());
 
-export const updateTitleNote = (id, title) => ({
-  type: UPDATE_TITLE_NOTE,
-  id,
-  title,
-});
+    API.fetch('/notes')
+      .then((response) => { return dispatch(getNotesSuccess(response)); })
+      .catch((errors) => { return dispatch(getNotesFailure(errors)); });
+  };
+};
 
-export const addNote = () => ({
-  type: ADD_NOTE,
-});
+export const trashNote = (id) => {
+  return {
+    type: TRASH_NOTE,
+    id,
+  };
+};
+
+export const restoreNote = (id) => {
+  return {
+    type: RESTORE_NOTE,
+    id,
+  };
+};
+
+export const exitNote = (id) => {
+  return {
+    type: EXIT_NOTE,
+    id,
+  };
+};
+
+export const enterNote = (id) => {
+  return {
+    type: ENTER_NOTE,
+    id,
+  };
+};
+
+export const selectNote = (id) => {
+  return {
+    type: SELECT_NOTE,
+    id,
+  };
+};
+
+export const updateBodyNote = (id, body) => {
+  return {
+    type: UPDATE_BODY_NOTE,
+    id,
+    body,
+  };
+};
+
+export const updateTitleNote = (id, title) => {
+  return {
+    type: UPDATE_TITLE_NOTE,
+    id,
+    title,
+  };
+};
+
+export const addNote = () => {
+  return {
+    type: ADD_NOTE,
+  };
+};

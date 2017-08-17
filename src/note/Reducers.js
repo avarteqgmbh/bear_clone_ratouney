@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   SELECT_NOTE,
   ENTER_NOTE,
@@ -7,36 +8,27 @@ import {
   RESTORE_NOTE,
   UPDATE_BODY_NOTE,
   UPDATE_TITLE_NOTE,
-  FETCHING_NOTES_START,
-  FETCHING_NOTES_STOP,
-  UPDATE_NOTES,
-} from './Types.js';
-import _ from 'lodash';
+  GET_NOTES_FAILURE,
+  GET_NOTES_SUCCESS,
+  GET_NOTES_START,
+  UPLOAD_NOTE,
+  UPLOAD_NOTE_START,
+  UPLOAD_NOTE_STOP,
+} from './Types';
 
 const initalState = {
-  notes: [
-    {/*
-      { id: 1, title: 'World', content: 'The world is great', status: 'GENERAL' },
-      { id: 2, title: 'Hello', content: 'HELLO THIS IS MY LIFE', status: 'GENERAL' },
-      { id: 3, title: 'Give', content: 'Never gonna give you up', status: 'GENERAL' },
-      { id: 4, title: 'Let', content: 'Never gonna let you down', status: 'TRASH' },
-      { id: 5, title: 'Run', content: 'Never gonna run around', status: 'GENERAL' },
-      { id: 6, title: 'Make', content: 'Never gonna make you cry', status: 'GENERAL' },
-      { id: 7, title: 'Say', content: 'Never gonna say goodbye', status: 'TRASH' },
-      { id: 8, title: 'Tell', content: 'Never gonna tell a lie', status: 'GENERAL' },
-      { id: 9, title: 'Hurt', content: 'or hurt you...', status: 'TRASH' },
-    */}
-  ],
+  notes: [],
   selectedNoteId: -1,
   overNoteId: -1,
-  fetchingNotes: false,
+  api_fetching: false,
+  api_uploading: false,
 };
 
 const initalNote = function initalNote(id) {
   return {
     id,
     title: '',
-    content: '',
+    body: '',
     status: 'GENERAL',
   };
 };
@@ -44,34 +36,60 @@ const initalNote = function initalNote(id) {
 const NoteReducer = function NoteReducer(state = initalState, action) {
   console.log("[NoteReducer:Action] - ", action)
   const lastId = (list) => ((_.last(list)).id);
+  console.log('[NoteReducer:Action] - ', action)
 
   switch (action.type) {
-    case UPDATE_NOTES:
+    case UPLOAD_NOTE_START:
       return Object.assign(
         {},
         state,
         {
-          notes: action.notes
-        }
-      )
+          api_uploading: true,
+        },
+      );
 
-    case FETCHING_NOTES_START:
+    case UPLOAD_NOTE_STOP:
       return Object.assign(
         {},
         state,
         {
-          fetchingNotes: true,
-        }
-      )
+          api_uploading: false,
+        },
+      );
 
-    case FETCHING_NOTES_STOP:
+    case UPLOAD_NOTE:
+      console.log('Upload Note : ', action.note)
+      console.log('Means this one : ', state.notes[action.note])
+      return state;
+
+    case GET_NOTES_FAILURE:
+      console.log('You fucked up : ', action.error)
       return Object.assign(
         {},
         state,
         {
-          fetchingNotes: false,
-        }
-      )
+          api_fetching: false,
+        },
+      );
+
+    case GET_NOTES_SUCCESS:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: action.notes.data,
+          api_fetching: false,
+        },
+      );
+
+    case GET_NOTES_START:
+      return Object.assign(
+        {},
+        state,
+        {
+          api_fetching: true,
+        },
+      );
 
     case TRASH_NOTE:
       return Object.assign(
