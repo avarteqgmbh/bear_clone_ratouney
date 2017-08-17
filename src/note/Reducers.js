@@ -17,18 +17,18 @@ import {
 } from './Types';
 
 const initalState = {
-  notes: [],
+  notes:          [],
   selectedNoteId: -1,
-  overNoteId: -1,
-  api_fetching: false,
-  api_uploading: false,
+  overNoteId:     -1,
+  api_fetching:   false,
+  api_uploading:  false,
 };
 
 const initalNote = function initalNote(id) {
   return {
     id,
-    title: '',
-    body: '',
+    title:  '',
+    body:   '',
     status: 'GENERAL',
   };
 };
@@ -36,7 +36,7 @@ const initalNote = function initalNote(id) {
 const NoteReducer = function NoteReducer(state = initalState, action) {
   console.log("[NoteReducer:Action] - ", action)
   const lastId = (list) => ((_.last(list)).id);
-  console.log('[NoteReducer:Action] - ', action)
+  console.log('[NoteReducer:Action] - ', action);
 
   switch (action.type) {
     case UPLOAD_NOTE_START:
@@ -58,12 +58,12 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
       );
 
     case UPLOAD_NOTE:
-      console.log('Upload Note : ', action.note)
-      console.log('Means this one : ', state.notes[action.note])
+      console.log('Upload Note : ', action.note);
+      console.log('Means this one : ', state.notes[action.note]);
       return state;
 
     case GET_NOTES_FAILURE:
-      console.log('You fucked up : ', action.error)
+      console.log('You fucked up : ', action.error);
       return Object.assign(
         {},
         state,
@@ -77,7 +77,7 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
         {},
         state,
         {
-          notes: action.notes.data,
+          notes:        action.notes.data,
           api_fetching: false,
         },
       );
@@ -116,7 +116,7 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
               : note),
           ),
           selectedNoteId: -1,
-          overNoteId: -1,
+          overNoteId:     -1,
         },
       );
 
@@ -132,7 +132,9 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
         return Object.assign(
           {},
           state,
-          { ...state, overNoteId: -1 },
+          {
+            overNoteId: -1,
+          },
         );
       }
       return state;
@@ -179,7 +181,7 @@ const NoteReducer = function NoteReducer(state = initalState, action) {
         {},
         state,
         {
-          notes: [...state.notes, newNote],
+          notes:          [...state.notes, newNote],
           selectedNoteId: newNote.id,
         });
 

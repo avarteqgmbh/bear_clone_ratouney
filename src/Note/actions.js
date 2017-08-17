@@ -17,29 +17,6 @@ import {
 import API from './../api';
 import MessageBox from './../layout/MessageBox';
 
-export const uploadNote = (note) => {
-  return (dispatch, getState) => {
-    dispatch(uploadNoteStart());
-
-    const stat = getState();
-    const pos_in_arr = _.findIndex(stat.NoteReducer.notes, (tempnote) => tempnote.id === stat.NoteReducer.selectedNoteId)
-    const curr = stat.NoteReducer.notes[pos_in_arr];
-    const payload = {
-      note: {
-        id: curr.id,
-        title: curr.title,
-        body: curr.body,
-      },
-    };
-    API.post('/notes/' + curr.id, payload)
-    .then((response) => console.log('did not fail : ', response))
-    .catch((errors) => console.log('Fuck', errors))
-
-
-    dispatch(uploadNoteStop());
-  }
-};
-
 export const uploadNoteStart = () => {
   return {
     type: UPLOAD_NOTE_START,
@@ -49,6 +26,30 @@ export const uploadNoteStart = () => {
 export const uploadNoteStop = () => {
   return {
     type: UPLOAD_NOTE_STOP,
+  };
+};
+
+export const uploadNote = () => {
+  return (dispatch, getState) => {
+    dispatch(uploadNoteStart());
+
+    const stat = getState();
+    const pos_in_arr = _.findIndex(stat.NoteReducer.notes, (
+                                      tempnote) => tempnote.id === stat.NoteReducer.selectedNoteId);
+    const curr = stat.NoteReducer.notes[pos_in_arr];
+    const payload = {
+      note: {
+        id:    curr.id,
+        title: curr.title,
+        body:  curr.body,
+      },
+    };
+    API.post('/notes/' + curr.id, payload)
+    .then((response) => console.log('did not fail : ', response))
+    .catch((errors) => console.log('Fuck', errors));
+
+
+    dispatch(uploadNoteStop());
   };
 };
 
@@ -66,7 +67,7 @@ export const getNotesFailure = (error) => {
 };
 
 export const getNotesSuccess = (notes) => {
-  MessageBox("Senpai, notice me", "Notes fetched from Server !", "sync", { color: 'green'});
+  MessageBox('Senpai, notice me', 'Notes fetched from Server !', 'sync', { color: 'green' });
   return {
     type: GET_NOTES_SUCCESS,
     notes,

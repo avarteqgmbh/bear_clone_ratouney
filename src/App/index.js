@@ -15,7 +15,7 @@ class RenderApp extends React.Component {
     if (this.props.token === '') {
       return (
         <LoginForm />
-      )
+      );
     }
     return (
       <Switch>
@@ -33,7 +33,7 @@ class RenderApp extends React.Component {
 function mapStateToProps(state) {
   return {
     token: state.SessionReducer.token,
-  }
+  };
 }
 
 const App = connect(mapStateToProps)(RenderApp);

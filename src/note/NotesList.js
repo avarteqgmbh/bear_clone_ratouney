@@ -2,7 +2,8 @@
 import React from 'react';
 import { Menu, Col, Button } from 'antd';
 
-const NotesList = function NotesList({ notes, hover, selected, onNoteClick, onExitNote, onEnterNote, onTrashNote, onRestoreNote }) {
+const NotesList = function NotesList({ notes, hover, selected, onNoteClick,
+                                       onExitNote, onEnterNote, onTrashNote, onRestoreNote }) {
   return (
     <Menu theme="light" mode="inline" >
       {notes.map((note) =>

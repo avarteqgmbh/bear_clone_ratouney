@@ -3,11 +3,11 @@ import { notification, Icon } from 'antd';
 
 const MessageBox = function MessageBox(title, description, icon, style) {
     const args = {
-        message: title,
+        message:    title,
         description,
-        icon: <Icon type={icon} style={style} />,
+           icon:    <Icon type={icon} style={style} />,
     };
     notification.open(args);
-}
+};
 
 export default MessageBox;

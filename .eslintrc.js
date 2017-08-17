@@ -6,6 +6,10 @@ module.exports = {
         "import"
     ],
     "rules": {
+        "flowtype/*": 0,
+        "no-case-declarations": 0,
+        "no-console": 0,
+        "react/prop-types": 0,
         "class-methods-use-this": 0,
         "react/jsx-filename-extension": 0,
         "camelcase": 0,
@@ -17,8 +21,7 @@ module.exports = {
         "no-multi-spaces": ["error", { exceptions: { "ImportDeclaration": true, "VariableDeclarator": true } }],
         "max-len": [2, { "code": 120 }],
         "indent": 0,
-        /*
-        "indent": ["error", 2, {
+        /*"indent": ["error", 2, {
             "VariableDeclarator": 2,
             "SwitchCase": 1,
             "MemberExpression": 1,

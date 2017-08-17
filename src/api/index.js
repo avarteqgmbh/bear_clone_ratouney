@@ -3,11 +3,12 @@ import fetch from 'isomorphic-fetch';
 const host_api = process.env.REACT_APP_API_URL;
 
 const headers = {
+    Accept:         'application/json',
     'Content-Type': 'application/json',
-}
+};
 
 const handleResponse = function handleResponse(payload) {
-    console.log('HandleReponse : ', payload)
+    console.log('HandleReponse : ', payload);
     return payload.json().then(
         (response) => {
             if (!payload.ok) {
@@ -15,7 +16,7 @@ const handleResponse = function handleResponse(payload) {
             } // else
             return response;
         },
-    ).catch((error) => { return error.error });
+    ).catch((error) => { return error.error; });
 };
 
 const API = {
@@ -27,7 +28,7 @@ const API = {
         return fetch(host_api + url, params).then(handleResponse);
     },
     put: (url, content) => {
-        const body = JSON.stringify(content)
+        const body = JSON.stringify(content);
         const params = {
             method: 'PUT',
             headers,
@@ -36,14 +37,14 @@ const API = {
         return fetch(host_api + url, params).then(handleResponse);
     },
     post: (url, content) => {
-        const body = JSON.stringify(content)        
+        const body = JSON.stringify(content);
         const params = {
             method: 'POST',
             headers,
             body,
-        }
-        return fetch(host_api + url, params).then(handleResponse)
+        };
+        return fetch(host_api + url, params).then(handleResponse);
     },
-}
+};
 
 export default API;

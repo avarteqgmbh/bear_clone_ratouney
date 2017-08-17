@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, Row, Col, Button } from 'antd';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
   updateBodyNote,
@@ -7,14 +8,13 @@ import {
   uploadNote,
 } from './Actions';
 // Needed for a commented array search function
-import _ from 'lodash';
 
 const RenderNoteBody = function RenderNoteBody(props) {
   const { selectedNoteId, notes, onBodyUpdate, onTitleUpdate, onPushUpload, upload_state } = props;
 
   if (selectedNoteId === -1) { return (<div>You know Nothing</div>); }
   // Find the real spot in the array with this
-  const pos_in_arr = _.findIndex(notes, (note) => note.id === selectedNoteId)
+  const pos_in_arr = _.findIndex(notes, (note) => note.id === selectedNoteId);
   const current = notes[pos_in_arr];
   return (
     <div>
@@ -47,7 +47,7 @@ const RenderNoteBody = function RenderNoteBody(props) {
       </Row>
     </div>
   );
-}
+};
 
 function mapStateToProps(state) {
   return {
@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
     },
     onPushUpload: (note) => {
       dispatch(uploadNote(note));
-    }
+    },
   };
 }
 
