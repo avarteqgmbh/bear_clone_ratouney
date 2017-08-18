@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
+import _ from 'lodash';
 
 const { Content } = Layout;
 
@@ -17,8 +18,10 @@ const RenderEditor = function RenderEditor(props)  {
 }
 
 function mapStateToProps(state) {
+    console.log('MapStateToProps - ', state)
+    _.findIndex(state.NoteListReducer.notes, )
     return {
-        var: state.var
+        current: 42,
     };
 }
 

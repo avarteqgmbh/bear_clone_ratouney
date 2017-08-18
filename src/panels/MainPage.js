@@ -19,7 +19,7 @@ const RenderMainPage = function MainPage(props) {
                 }
             </Sider>
             <Layout style={{ marginLeft: 200 }}>
-
+                <Editor />
             </Layout>
         </Layout>
     )
