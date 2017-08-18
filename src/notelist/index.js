@@ -6,7 +6,7 @@ import { selectNote } from './Actions';
 const RenderNoteList = function RenderNoteList({onClickNote, listName, notes}) {
     return (
         <Menu theme="dark" mode="inline" onClick={(e) => onClickNote(e.key)} >
-            <Menu.SubMenu key="sub1" title={<span className="nav-text" style={{ fontSize: '16px' }} >{listName}</span>} >
+            <Menu.SubMenu key={listName} title={<span className="nav-text" style={{ fontSize: '16px' }} >{listName}</span>} >
             {notes.map((note) => (
                 <Menu.Item key={note.id} >{note.title}</Menu.Item>
             ))}
