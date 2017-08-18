@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import NoteReducer from './../note/Reducers';
-import SessionReducer from './../sessions/Reducers';
+import NoteListReducer from './../notelist/Reducers';
 
-const NoteApp = combineReducers({
-  NoteReducer,
-  SessionReducer,
+const AppReducer = combineReducers({
+    NoteListReducer,
 });
 
-export default NoteApp;
+export default AppReducer;
