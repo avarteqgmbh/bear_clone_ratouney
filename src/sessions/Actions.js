@@ -23,6 +23,11 @@ export const loginSuccess = (token) => {
     };
 };
 
+const offlineHandler = function offlineHandler(error, dispatch) {
+    MessageBox('Senpai, notice me', 'Server not responding, possibly offline', 'cross', { color: 'red' });
+    dispatch({ type: LOGIN_FAILURE, error})
+}
+
 const loginHandler = function loginHandler(response, dispatch) {
     if (response.meta !== undefined) {
         dispatch(loginSuccess(response.meta.token));
@@ -38,6 +43,6 @@ export const loginRequest = (username, password) => {
         const payload = { username, password };
         API.post('/sessions', payload)
             .then((response) => loginHandler(response, dispatch))
-            .catch((error) => console.log('You fucked up : ', error));
+            .catch((error) => offlineHandler(error, dispatch));
     };
 };

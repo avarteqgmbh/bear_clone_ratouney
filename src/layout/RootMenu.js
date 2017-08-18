@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Menu, Icon, Layout, Spin } from 'antd';
+import { Menu, Icon, Layout } from 'antd';
 
 const { Sider } = Layout;
 const { ItemGroup } = Menu;
@@ -16,14 +15,10 @@ const itemGroupTitle = function itemGroupTitle(title) {
   );
 };
 
-const RenderRootMenu = (props) => (
+const RootMenu = ({ items, tags }) => (
   <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, width: '120px' }}>
-      {props.fetchingNotes === true
-        ? <Spin style={{ background: 'yellow'}} >Fetching</Spin>
-        : ''
-      }
     <Menu theme="dark" mode="inline">
-      {props.items.map((item) => (
+      {items.map((item) => (
         <Menu.Item key={item.key}>
           <Link to={item.note_category} onClick={() => console.log('CLICKED GOTO : ', item.note_category)} >
             <Icon type={item.icon} />
@@ -36,7 +31,7 @@ const RenderRootMenu = (props) => (
       <Menu.Divider />
 
       <ItemGroup key="3" title={itemGroupTitle(MENU_TITLE)}>
-        {props.tags.map((tag, i) =>
+        {tags.map((tag, i) =>
           (<Menu.Item key={i + 4}>
             <Icon type="tag-o" />
             <span className="nav-text">{tag}</span>
@@ -46,14 +41,5 @@ const RenderRootMenu = (props) => (
     </Menu>
   </Sider>
 );
-
-const mapStateToProps = (state) => {
-  return {
-    fetchingNotes: state.NoteReducer.fetchingNotes,
-  }
-}
-
-
-const RootMenu = connect(mapStateToProps)(RenderRootMenu);
 
 export default RootMenu;

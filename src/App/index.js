@@ -18,14 +18,14 @@ class RenderApp extends React.Component {
       );
     }
     return (
-      <Switch>
-        <Route exact path="/auth">
-          <LoginScreen />
-        </Route>
-        <Route>
-          <NoteMenu />
-        </Route>
-      </Switch>
+      <Layout>
+        <Menus />
+
+        <MainPane>
+          <Note />
+        </MainPane>
+
+      </Layout>
     );
   }
 }

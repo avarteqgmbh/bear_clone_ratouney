@@ -34,7 +34,6 @@ const initalNote = function initalNote(id) {
 };
 
 const NoteReducer = function NoteReducer(state = initalState, action) {
-  console.log("[NoteReducer:Action] - ", action)
   const lastId = (list) => ((_.last(list)).id);
   console.log('[NoteReducer:Action] - ', action);
 
