@@ -1,4 +1,7 @@
-import { SELECT_NOTE } from './Types';
+import { 
+    SELECT_NOTE,
+    ADD_NOTE,
+ } from './Types';
 
 export const selectNote = function selectNote(id) {
     return ({
@@ -6,3 +9,10 @@ export const selectNote = function selectNote(id) {
         id
     })
 }
+
+export const addNote = (category) => {
+    return {
+        type: ADD_NOTE,
+        category,
+    };
+};
