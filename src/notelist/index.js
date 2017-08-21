@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
-import { selectNote, addNote } from './Actions';
+import { selectNote, addNote, hoverNote, unhoverNote } from './Actions';
 
 const DispatchSelector = function DispatchSelector(func_select, func_add, info) {
   if (info.key === 'add_note') {
@@ -12,17 +12,36 @@ const DispatchSelector = function DispatchSelector(func_select, func_add, info) 
   }
 }
 
-const RenderNoteList = function RenderNoteList({ onClickNote, onAddNote, listName, notes }) {
+const RenderNoteList = function RenderNoteList({ onClickNote, onAddNote, listName, notes, selected, onHoverNote, onUnhoverNote, hover, hovering }) {
   return (
-    <Menu theme="dark" mode="inline" onClick={(e) => { DispatchSelector(onClickNote, onAddNote, e); }} >
+    <Menu
+      theme="dark"
+      mode="inline"
+      onClick={(e) => { DispatchSelector(onClickNote, onAddNote, e); }}
+      selectedKeys={[String(selected)]}
+    >
       <Menu.SubMenu key={listName} title={<span className="nav-text" style={{ fontSize: '16px' }} >{listName}</span>} >
         {notes.map((note) => (
-          <Menu.Item key={note.id} >{note.title}</Menu.Item>
+          <Menu.Item
+            key={note.id}
+            onMouseEnter={({ key }) => { onHoverNote(key); }}
+            onMouseLeave={({ key }) => { onUnhoverNote(key); }}
+          >
+            {note.title}
+          </Menu.Item>
         ))}
         <Menu.Item key={'add_note'}><Icon type="plus-square" /><span style={{ color: 'green' }}> New Note</span></Menu.Item>
       </Menu.SubMenu>
     </Menu>
   );
+};
+
+function mapStateToProps(state) {
+  return {
+    selected: state.NoteListReducer.selected,
+    hovering: state.NoteListReducer.hovering,
+    hover:    state.NoteListReducer.hover,
+  };
 };
 
 function mapDispatchToProps(dispatch) {
@@ -33,9 +52,15 @@ function mapDispatchToProps(dispatch) {
     onAddNote: (categ) => {
       dispatch(addNote(categ));
     },
+    onHoverNote: (id) => {
+      dispatch(hoverNote(id));
+    },
+    onUnhoverNote: (id) => {
+      dispatch(unhoverNote(id));
+    },
   };
 }
 
-const NoteList = connect(null, mapDispatchToProps)(RenderNoteList);
+const NoteList = connect(mapStateToProps, mapDispatchToProps)(RenderNoteList);
 
 export default NoteList;

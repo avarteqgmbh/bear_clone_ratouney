@@ -2,6 +2,8 @@ import _ from 'lodash';
 import {
     SELECT_NOTE,
     ADD_NOTE,
+    HOVER_NOTE,
+    UNHOVER_NOTE,
 } from './Types';
 import {
     UPDATE_TITLE,
@@ -20,12 +22,33 @@ const initialState = {
     ],
     categories: ['GENERAL', 'TRASH', 'TEMP'],
     selected:   -1,
+    hover:      -1,
+    hovering:   false,
 };
 
 const NoteListReducer = function NoteListReducer(state = initialState, action) {
     console.log('[NoteListReducer:Action] -', action);
 
     switch (action.type) {
+        case HOVER_NOTE:
+            return Object.assign(
+                {},
+                state,
+                {
+                    hover:    action.id,
+                    hovering: true,
+                },
+            );
+
+        case UNHOVER_NOTE:
+            return Object.assign(
+                {},
+                state,
+                {
+                    hovering: false,
+                },
+            );
+
         case ADD_NOTE:
             const ids = state.notes.map((elem) => elem.id);
             const new_highest = _.max(ids) + 1;
