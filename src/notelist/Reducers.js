@@ -1,111 +1,143 @@
 import _ from 'lodash';
 import {
-    SELECT_NOTE,
-    ADD_NOTE,
-    HOVER_NOTE,
-    UNHOVER_NOTE,
+  SELECT_NOTE,
+  ADD_NOTE,
+  HOVER_NOTE,
+  UNHOVER_NOTE,
 } from './Types';
 import {
-    UPDATE_TITLE,
-    UPDATE_BODY,
-    CHANGE_CATEGORY,
+  UPDATE_TITLE,
+  UPDATE_BODY,
+  CHANGE_CATEGORY,
 } from './../editor/Types';
+import {
+  SYNC_NOTE_START,
+  SYNC_NOTE_SUCCESS,
+  SYNC_NOTE_FAILURE,
+} from './../topmenu/Types';
 
 const initialState = {
-    notes: [
-        { id: 1, title: 'Dank Memes', body: 'I love dank memes', category: 'GENERAL', owner: 'ratouney' },
-        { id: 4, title: 'Epitech', body: 'Blinux is ugly', category: 'TRASH', owner: 'ratouney' },
-        { id: 6, title: 'New Note', body: 'Nope', category: 'TEMP', owner: 'ratouney' },
-        { id: 3, title: 'Overwatch', body: 'The cancer that i love', category: 'GENERAL', owner: 'ratouney' },
-        { id: 5, title: 'Stuff', body: 'Nothing here', category: 'GENERAL', owner: 'ratouney' },
-        { id: 2, title: 'Reddit', body: 'Sometimes, i\'m bored', category: 'TRASH', owner: 'ratouney' },
-    ],
-    categories: ['GENERAL', 'TRASH', 'TEMP'],
-    selected:   -1,
-    hover:      -1,
-    hovering:   false,
+  notes:        [],
+  categories:   ['GENERAL', 'TRASH', 'TEMP'],
+  selected:     -1,
+  hover:        -1,
+  hovering:     false,
+  api_fetching: false,
+};
+
+const convertNote = function convertNote(note) {
+  return { id: note.id, title: note.title, body: note.body, category: note.status, owner: 'ratouney' };
 };
 
 const NoteListReducer = function NoteListReducer(state = initialState, action) {
-    console.log('[NoteListReducer:Action] -', action);
+  console.log('[NoteListReducer:Action] -', action);
 
-    switch (action.type) {
-        case HOVER_NOTE:
-            return Object.assign(
-                {},
-                state,
-                {
-                    hover:    action.id,
-                    hovering: true,
-                },
-            );
+  switch (action.type) {
+    case SYNC_NOTE_SUCCESS:
+      const newnotes = action.notes.map((elem) => { return convertNote(elem); });
+      return Object.assign(
+        {},
+        state,
+        {
+          notes:        newnotes,
+          api_fetching: false,
+        },
+      );
 
-        case UNHOVER_NOTE:
-            return Object.assign(
-                {},
-                state,
-                {
-                    hovering: false,
-                },
-            );
+    case SYNC_NOTE_START:
+      return Object.assign(
+        {},
+        state,
+        {
+          api_fetching: true,
+        },
+      );
 
-        case ADD_NOTE:
-            const ids = state.notes.map((elem) => elem.id);
-            const new_highest = _.max(ids) + 1;
-            const new_elem = { id: new_highest, title: '', body: '', category: action.category, owner: 'ratouney' };
-            return Object.assign(
-                {},
-                state,
-                {
-                    notes: [...state.notes, new_elem],
-                    selected: new_highest,
-                });
+    case SYNC_NOTE_FAILURE:
+      return Object.assign(
+        {},
+        state,
+        {
+          api_fetching: false,
+        },
+      );
 
-        case SELECT_NOTE:
-            return { ...state, selected: action.id };
+    case HOVER_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          hover: action.id,
+          hovering: true,
+        },
+      );
 
-        case UPDATE_TITLE:
-            return Object.assign(
-                {},
-                state,
-                {
-                    notes: state.notes.map((note) =>
-                        (note.id === Number(action.id)
-                            ? { ...note, title: action.title }
-                            : note
-                        ))
-                },
-            );
+    case UNHOVER_NOTE:
+      return Object.assign(
+        {},
+        state,
+        {
+          hovering: false,
+        },
+      );
 
-        case UPDATE_BODY:
-            return Object.assign(
-                {},
-                state,
-                {
-                    notes: state.notes.map((note) =>
-                        (note.id === Number(action.id)
-                            ? { ...note, body: action.body }
-                            : note
-                        ))
-                },
-            );
+    case ADD_NOTE:
+      const ids = state.notes.map((elem) => elem.id);
+      const new_highest = _.max(ids) + 1;
+      const new_elem = { id: new_highest, title: '', body: '', category: action.category, owner: 'ratouney' };
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: [...state.notes, new_elem],
+          selected: new_highest,
+        });
 
-        case CHANGE_CATEGORY:
-            return Object.assign(
-                {},
-                state,
-                {
-                    notes: state.notes.map((note) =>
-                        (note.id === Number(action.id)
-                            ? { ...note, category: action.category }
-                            : note
-                        ))
-                },
-            );
+    case SELECT_NOTE:
+      return { ...state, selected: action.id };
 
-        default:
-            return state;
-    }
+    case UPDATE_TITLE:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map((note) =>
+            (note.id === Number(action.id)
+              ? { ...note, title: action.title }
+              : note
+            ))
+        },
+      );
+
+    case UPDATE_BODY:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map((note) =>
+            (note.id === Number(action.id)
+              ? { ...note, body: action.body }
+              : note
+            ))
+        },
+      );
+
+    case CHANGE_CATEGORY:
+      return Object.assign(
+        {},
+        state,
+        {
+          notes: state.notes.map((note) =>
+            (note.id === Number(action.id)
+              ? { ...note, category: action.category }
+              : note
+            ))
+        },
+      );
+
+    default:
+      return state;
+  }
 }
 
 export default NoteListReducer;

@@ -2,3 +2,7 @@ export const SELECT_NOTE = 'SELECT_NOTE';
 export const ADD_NOTE = 'ADD_NOTE';
 export const HOVER_NOTE = 'HOVER_NOTE';
 export const UNHOVER_NOTE = 'UNHOVER_NOTE';
+
+export const REMOTE_ADD_NOTE = 'REMOTE_ADD_NOTE';
+export const REMOTE_ADD_NOTE_SUCCESS = 'REMOTE_ADD_NOTE_SUCCESS';
+export const REMOTE_ADD_NOTE_FAILURE = 'REMOTE_ADD_NOTE_FAILURE';
