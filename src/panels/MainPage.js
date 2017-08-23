@@ -13,23 +13,28 @@ const RenderMainPage = function MainPage(props) {
       <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
         <TopMenu />
         {
-          props.categories.map((categ) => (
-            <NoteList key={categ} listName={categ} notes={props.notes.filter((note) => note.category === categ)} />
-          ))
+          props.categories.map((categ) => {
+            return (
+              <NoteList
+                key={categ}
+                listName={categ}
+                notes={props.notes.filter((note) => { return (note.category === categ); })}
+              />);
+          })
         }
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
         <Editor />
       </Layout>
     </Layout>
-  )
-}
+  );
+};
 
 function mapStateToProps(state) {
   return {
-    notes: state.NoteListReducer.notes,
+    notes:      state.NoteListReducer.notes,
     categories: state.NoteListReducer.categories,
-  }
+  };
 }
 
 const MainPage = connect(mapStateToProps)(RenderMainPage);

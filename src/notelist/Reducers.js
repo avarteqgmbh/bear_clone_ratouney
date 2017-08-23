@@ -67,7 +67,7 @@ const NoteListReducer = function NoteListReducer(state = initialState, action) {
         {},
         state,
         {
-          hover: action.id,
+          hover:    action.id,
           hovering: true,
         },
       );
@@ -82,14 +82,14 @@ const NoteListReducer = function NoteListReducer(state = initialState, action) {
       );
 
     case ADD_NOTE:
-      const ids = state.notes.map((elem) => elem.id);
+      const ids = state.notes.map((elem) => { return (elem.id); });
       const new_highest = _.max(ids) + 1;
       const new_elem = { id: new_highest, title: '', body: '', category: action.category, owner: 'ratouney' };
       return Object.assign(
         {},
         state,
         {
-          notes: [...state.notes, new_elem],
+          notes:    [...state.notes, new_elem],
           selected: new_highest,
         });
 
@@ -101,11 +101,12 @@ const NoteListReducer = function NoteListReducer(state = initialState, action) {
         {},
         state,
         {
-          notes: state.notes.map((note) =>
-            (note.id === Number(action.id)
+          notes: state.notes.map((note) => {
+            return (note.id === Number(action.id)
               ? { ...note, title: action.title }
               : note
-            ))
+            );
+          }),
         },
       );
 
@@ -114,11 +115,12 @@ const NoteListReducer = function NoteListReducer(state = initialState, action) {
         {},
         state,
         {
-          notes: state.notes.map((note) =>
-            (note.id === Number(action.id)
+          notes: state.notes.map((note) => {
+            return (note.id === Number(action.id)
               ? { ...note, body: action.body }
               : note
-            ))
+            );
+          }),
         },
       );
 
@@ -127,17 +129,18 @@ const NoteListReducer = function NoteListReducer(state = initialState, action) {
         {},
         state,
         {
-          notes: state.notes.map((note) =>
-            (note.id === Number(action.id)
+          notes: state.notes.map((note) => {
+            return (note.id === Number(action.id)
               ? { ...note, category: action.category }
               : note
-            ))
+            );
+          }),
         },
       );
 
     default:
       return state;
   }
-}
+};
 
 export default NoteListReducer;

@@ -7,7 +7,7 @@ const { SubMenu } = Menu;
 
 const TopMenuDispatcher = function TopMenuDispatcher(event, onNoteSync) {
   console.log('Recieved event : ', event);
-  if (event.key === "3") {
+  if (event.key === '3') {
     onNoteSync();
   }
 };
@@ -22,7 +22,7 @@ const RenderTopMenu = function TopMenu({ onNoteSync, api_fetching }) {
             <img
               alt="example"
               width="25%"
-              src='http://icons.iconarchive.com/icons/iconsmind/outline/512/Bear-icon.png'
+              src="http://icons.iconarchive.com/icons/iconsmind/outline/512/Bear-icon.png"
             />
             <span className="nav-text" style={{ fontSize: '16px' }} >BearClone</span>
           </span>
@@ -34,14 +34,14 @@ const RenderTopMenu = function TopMenu({ onNoteSync, api_fetching }) {
       </SubMenu>
       <Menu.Divider />
     </Menu>
-  )
-}
+  );
+};
 
 function mapStateToProps(state) {
   return {
     api_fetching: state.NoteListReducer.api_fetching,
   };
-};
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -49,7 +49,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(syncNotes());
     },
   };
-};
+}
 
 const TopMenu = connect(mapStateToProps, mapDispatchToProps)(RenderTopMenu);
 

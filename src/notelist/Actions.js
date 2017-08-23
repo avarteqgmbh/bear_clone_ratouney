@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
     SELECT_NOTE,
     ADD_NOTE,
@@ -24,7 +23,7 @@ export const remoteAddNoteFailure = (error) => {
 };
 
 export const remoteAddNote = (owner, category) => {
-    return (dispatch) => {
+    return () => {
         console.log('Add a note on remote server with  : ', category);
         const payload = { note: { title: 'Sample Title', body: 'Yes, sample body, not a joke' } };
         console.log('Payload : ', payload);
@@ -36,8 +35,8 @@ export const selectNote = function selectNote(id) {
     return ({
         type: SELECT_NOTE,
         id,
-    })
-}
+    });
+};
 
 export const addNote = (category) => {
     return {

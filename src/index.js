@@ -11,8 +11,10 @@ import AppReducer from './reducers';
 export const store = createStore(AppReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
-    <Provider store={store} >
-        <App />
-    </Provider>
-    , document.getElementById('root'));
+  <Provider store={store} >
+    <App />
+  </Provider>
+  , document.getElementById('root'));
 registerServiceWorker();
+
+export default store;
